@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Task manager</title>    
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+            <h2 id="title">Task Manager</h2>
+            <ul id="signature">
+                <li>Made by Grigoris Papadopoulos</li>
+                <li><a href="mailto:grigoris_24@hotmail.com">grigoris_24@hotmail.com</a></li>
+                
+            </ul>
+            
+        </header>
+        <main id="main">
+            <div id="buttons">
+                <form id="task_form">
+                    <input id="task_text" type="text" placeholder="Type your task here">
+                    <p>Due By:</p>
+                    <input id="task_date" type="date">
+                    <div id="floatingWindow">Please add task name.</div>
+                    <button class="all_buttons" id="add_task" type="submit">Add Task</button>
+                    <button class="all_buttons" id="mark_completed">Mark As Completed</button>
+                    <button class="all_buttons" id="unmark">Unmark Completed</button>
+                    <button class="all_buttons" id="delete_selected">Delete Selected Tasks</button>
+                    <button class="all_buttons" id="delete_all">Delete All Tasks</button>
+                </form>
+
+                
+                
+            </div>
+            <div id="tasks">
+                <span id="sorting">
+                    <button class="sort_by_id" id="sort_by_id">Sort By ID</button>
+                    <button class="sort_by_date" id="sort_by_date">Sort By Date</button>
+                    <button class="sort_by_due" id="sort_by_due">Sort By Due Date</button>
+                    <button class="sort_by_completed" id="sort_by_status">Sort By Completed</button>
+                </span>
+                
+                
+                <span class="line"></span>
+                <span id = "check_all">
+                    <input type="checkbox" id="checkem"></input>
+                    <h5>Check all</h5>
+                </span>
+                <h6 id="no_tasks_found">No tasks found</h6>
+                
+            </div>
+        </main>
+    <script src = "javascript.js"></script>
+    </div>
+</body>
+</html>
