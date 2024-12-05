@@ -1,4 +1,4 @@
-# Task Manager
+# Task Manager (Still in development)
 
 A simple, yet efficient task management web application that helps users keep track of their tasks, mark them as completed, and organize them by due date, status, and priority. This application allows users to add tasks, set due dates, and sort tasks based on various criteria such as name, date, and status.
 
