@@ -23,16 +23,23 @@ const checkAllCheckbox = document.getElementById("checkem");
         });
     }
 
-    const tasksChoose = document.getElementById("tasks");
-    tasksChoose.addEventListener("click", function(event) {
-        const clickedDiv = event.target.closest("div");
-        if (clickedDiv) {
-            const checkbox = clickedDiv.querySelector("input[type='checkbox']");
-            if (checkbox) {
-                checkbox.checked = !checkbox.checked;
-            }
+document.getElementById("tasks").addEventListener("click", function(event) {
+    if (event.target && event.target.closest(".tasks")) {
+        const taskDiv = event.target.closest(".tasks");
+        if (event.target.tagName === "INPUT" && event.target.type === "checkbox") {
+            event.stopPropagation();
+            return;
         }
-    });
+        const checkbox = taskDiv.querySelector("input[type='checkbox']");
+
+        if (checkbox) {
+            checkbox.checked = !checkbox.checked;
+        }
+    }
+});
+    
+
+
 
 document.getElementById("delete_all").addEventListener("click", function() {
     const tasksContainer = document.getElementById("tasks");
@@ -130,6 +137,7 @@ document.getElementById("add_task").addEventListener("click", function() {
         newdiv.style.paddingTop = "10px";
         newdiv.style.paddingBottom = "10px";
         newdiv.style.paddingLeft = "5px";
+        newdiv.classList.add("tasks");
 
         if (taskDate) {
             newdiv.dataset.taskdate = taskDate;  
