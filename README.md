@@ -46,5 +46,5 @@ To get started with the Task Manager app locally, follow these steps:
 ## Technologies Used
 
     HTML
-    CSS (with Tailwind CSS for styling)
-    JavaScript (for interactivity and DOM manipulation)
+    CSS
+    JavaScript
