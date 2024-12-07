@@ -20,7 +20,7 @@
         <main id="main">
             <div id="buttons">
                 <form id="task_form">
-                    <input id="task_text" type="text" placeholder="Type your task here">
+                    <input id="task_text" type="text" required placeholder="Type your task here">
                     <p>Due By:</p>
                     <input id="task_date" type="date">
                     <div id="floatingWindow">Please add task name.</div>
@@ -52,7 +52,23 @@
                 
             </div>
         </main>
-    <script src = "javascript.js"></script>
+    
     </div>
+    <div id="editModal" style="display: none;">
+        <div id="modalContent">
+            <h2>Edit Task</h2>
+            <form id="editForm">
+                <label for="newTaskName">Task Name:</label>
+                <input type="text" id="newTaskName" name="taskName"><br><br>
+        
+                <label for="newDueDate">Due Date:</label>
+                <input type="date" id="newDueDate" name="dueDate"><br><br>
+        
+                <button type="submit">Save Changes</button>
+                <button type="button" id="closeModal">Cancel</button>
+            </form>
+        </div>
+    </div>    
+    <script src = "javascript.js"></script>
 </body>
 </html>
