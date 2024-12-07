@@ -20,26 +20,41 @@
         <main id="main">
             <div id="buttons">
                 <form id="task_form">
-                    <input id="task_text" type="text" required placeholder="Type your task here">
+                    <input id="task_text" type="text" placeholder="Type your task here">
                     <p>Due By:</p>
                     <input id="task_date" type="date">
+                    <div style="display: flex; flex-direction: row; gap:5px">
+                        <input name="reminder" type="checkbox">
+                        <label for="reminder">Remind me 24 hours before due date</label>
+                    </div>
+                    <div style="display:flex; justify-content: space-between; flex-direction: row; padding: 5px;">
+                        <div>Add to list:</div>
+                        <button style="padding: 3px; border-radius: 25px" id="create_list_button" type="submit">Create List</button>
+                    </div>
+                    
+                    <select id="list_select">
+                        <option selected value="0">No list</option>
+                    </select>
                     <div id="floatingWindow">Please add task name.</div>
                     <button class="all_buttons" id="add_task" type="submit">Add Task</button>
                     <button class="all_buttons" id="mark_completed">Mark As Completed</button>
                     <button class="all_buttons" id="unmark">Unmark Completed</button>
                     <button class="all_buttons" id="delete_selected">Delete Selected Tasks</button>
                     <button class="all_buttons" id="delete_all">Delete All Tasks</button>
+                    
+                    
                 </form>
 
                 
                 
             </div>
             <div id="tasks">
-                <span id="sorting">
+                <span id="sorting" style="display:flex; flex-direction: row; align-items: center; gap:10px">
                     <button class="sort_by_id" id="sort_by_id">Sort By ID</button>
                     <button class="sort_by_date" id="sort_by_date">Sort By Date</button>
                     <button class="sort_by_due" id="sort_by_due">Sort By Due Date</button>
                     <button class="sort_by_completed" id="sort_by_status">Sort By Completed</button>
+                    <button class="sort_by_list" id="sort_by_list">Sort By List</button>
                 </span>
                 
                 
@@ -63,12 +78,32 @@
         
                 <label for="newDueDate">Due Date:</label>
                 <input type="date" id="newDueDate" name="dueDate"><br><br>
+
+                <label for="moveList">Add to list:</label>
+                <select id="new_move_list" name="moveList">
+                    <option selected value="0">No list</option>
+                </select><br><br>
         
                 <button type="submit">Save Changes</button>
                 <button type="button" id="closeModal">Cancel</button>
             </form>
         </div>
     </div>    
+    <div id="create_list" style="display: none;">
+        <div id="create_list_content">
+            <h2 style="margin-bottom: 5px;">Create list</h2>
+            <form id="add_list_form">
+                <label for="newlistname">List name:</label>
+                <input required type="text" id="newlistname" name="listname"><br><br>
+
+                <label for="color-picker">List color:</label>
+                <input type="color" id="color-picker" name="color" value="#d3d3d3">
+
+                <button type="submit">Save Changes</button>
+                <button type="button" id="closeListModal">Cancel</button>
+            </form>
+        </div>
+    </div>
     <script src = "javascript.js"></script>
 </body>
 </html>

@@ -123,8 +123,8 @@ document.getElementById("add_task").addEventListener("click", function () {
 
         let newp = document.createElement("p");
         newp.textContent = `${taskId}. ${task}`;
-        newp.style.maxWidth = "470px";
-        newp.style.width = "470px";
+        newp.style.maxWidth = "400px";
+        newp.style.width = "400px";
 
         let radio_button = document.createElement("input");
         radio_button.type = "checkbox";
@@ -137,6 +137,17 @@ document.getElementById("add_task").addEventListener("click", function () {
         newdiv.style.paddingBottom = "10px";
         newdiv.style.paddingLeft = "5px";
         newdiv.classList.add("tasks");
+        newdiv.style.alignItems =  "center";
+        const selectedOption = document.getElementById("list_select").options[document.getElementById("list_select").selectedIndex];
+        newdiv.dataset.list = selectedOption.value;
+
+        const color = selectedOption.dataset.color;
+        const list_with_color = document.createElement("h5");
+        list_with_color.style.color = color;
+        list_with_color.textContent = selectedOption.text;
+        list_with_color.style.overflowWrap = "break-word";
+        list_with_color.style.width = "50px";
+        list_with_color.style.maxWidth = "50px";
 
         if (taskDate) {
             newdiv.dataset.taskdate = taskDate;
@@ -171,17 +182,21 @@ document.getElementById("add_task").addEventListener("click", function () {
         editButton.style.cursor = "pointer";
         editButton.title = "Edit task";
         editButton.classList.add("edit_button");
-      
+
+
+        
         newdiv.appendChild(radio_button);
         newdiv.appendChild(newp);
          
         document.getElementById("tasks").appendChild(newdiv);
+        newdiv.appendChild(list_with_color);
         newdiv.appendChild(created);
         newdiv.appendChild(duedate);
         newdiv.appendChild(editButton);
 
         taskId++;
         document.getElementById("check_all").style.display = "flex";
+        document.getElementById("list_select").selectedIndex = 0; 
     }
 });
 
@@ -342,7 +357,7 @@ document.getElementById("sort_by_due").addEventListener("click", function() {
 
 
 function resetSortButtonColors() {
-    const sortButtons = document.querySelectorAll("#sort_by_date, #sort_by_status, #sort_by_id, #sort_by_due");
+    const sortButtons = document.querySelectorAll("#sort_by_date, #sort_by_status, #sort_by_id, #sort_by_due, #sort_by_list");
     sortButtons.forEach(button => {
         button.style.backgroundColor = ""; 
     });
@@ -376,6 +391,13 @@ document.getElementById("tasks").addEventListener("click", function(event) {
                 dueDateElement.textContent = `No due date`;
             }
 
+            const dataset_list = taskDiv.dataset.list;
+            const newlist = document.getElementById("new_move_list");
+            if (dataset_list) {
+                const selectedlist = newlist.value;
+                taskDiv.dataset.list = selectedlist;
+            } 
+
             document.getElementById("editModal").style.display = "none";
         };
 
@@ -385,6 +407,92 @@ document.getElementById("tasks").addEventListener("click", function(event) {
     }
 });
 
+const selectList = document.getElementById("create_list_button");
+selectList.addEventListener("click", function() {
 
+    const newListModal = document.getElementById("create_list");
+    newListModal.style.display = "flex";
 
+    document.getElementById("add_list_form").onsubmit = function(event) {
+        event.preventDefault();
 
+        const list_name = document.getElementById("newlistname").value;
+
+        const selectListOptions = Array.from(document.getElementById("list_select").options);
+        const editListOptions = Array.from(document.getElementById("new_move_list").options);
+
+        const allOptions = [...selectListOptions, ...editListOptions];
+
+        const optionExists = allOptions.some(option => option.value === list_name);
+
+        if (!optionExists) {
+            const new_option = document.createElement("option");
+            new_option.value = list_name;
+            new_option.text = list_name;
+            const colorpicker = document.getElementById("color-picker").value;
+            new_option.dataset.color = colorpicker;
+            
+            const selectList = document.getElementById("list_select");
+            const edit_list = document.getElementById("new_move_list");
+            selectList.appendChild(new_option.cloneNode(true));
+            edit_list.appendChild(new_option.cloneNode(true));
+            newListModal.style.display = "none";
+            selectList.selectedIndex = selectList.options.length - 1;
+            
+
+            
+        } else {
+            alert("This list already exists.");
+        }
+    }
+
+    document.getElementById("closeListModal").addEventListener("click", function() {
+        newListModal.style.display = "none";
+    });
+});
+
+document.getElementById("tasks").addEventListener("click", function(event) {
+    if (event.target && event.target.closest(".tasks")) {
+        const taskDiv = event.target.closest(".tasks");
+        const taskListName = taskDiv.dataset.list; 
+
+        const moveDropdown = document.getElementById("new_move_list");
+        const options = Array.from(moveDropdown.options);
+
+        const matchingOptionIndex = options.findIndex(option => option.value === taskListName);
+
+        if (matchingOptionIndex !== -1) {
+            moveDropdown.selectedIndex = matchingOptionIndex;
+        }
+    }
+});
+
+let sortByListAsc = true;
+
+document.getElementById("sort_by_list").addEventListener("click", function() {
+    const tasksContainer = document.getElementById("tasks");
+    const taskDivs = Array.from(tasksContainer.querySelectorAll("div"));
+
+    resetSortButtonColors();
+
+    taskDivs.sort((a, b) => {
+        const taskListA = a.dataset.list.toLowerCase();
+        const taskListB = b.dataset.list.toLowerCase();
+
+        if (sortByListAsc) {
+            return taskListA.localeCompare(taskListB); 
+        } else {
+            return taskListB.localeCompare(taskListA); 
+        }
+    });
+
+    taskDivs.forEach(taskDiv => tasksContainer.appendChild(taskDiv));
+
+    if (sortByListAsc) {
+        this.style.backgroundColor = "#E1ECF4";
+    } else {
+        this.style.backgroundColor = "#3F84F6";
+    }
+
+    sortByListAsc = !sortByListAsc;
+});
