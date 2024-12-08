@@ -99,6 +99,12 @@ let taskId = 1;
 document.getElementById("add_task").addEventListener("click", function () {
     let task = document.getElementById("task_text").value;
     let taskDate = document.getElementById("task_date").value;
+
+    const reminderCheckbox = document.getElementById("reminder");
+    if (taskDate == "" && reminderCheckbox.checked) {
+        alert("No due date added.");
+        return;
+    }
     if (task == "") {
         const floatingWindow = document.getElementById("floatingWindow");
         floatingWindow.style.display = "block";
@@ -195,6 +201,14 @@ document.getElementById("add_task").addEventListener("click", function () {
         newdiv.appendChild(editButton);
 
         taskId++;
+        if (reminderCheckbox.checked && taskDate) {
+            let taskDueDate = new Date(taskDate);
+            let reminderTime = taskDueDate.getTime() - 24 * 60 * 60 * 1000;
+
+            setTimeout(function () {
+                alert(`Reminder: Task "${task}" is due in 24 hours!`);
+            }, reminderTime - Date.now());
+        }
         document.getElementById("check_all").style.display = "flex";
         document.getElementById("list_select").selectedIndex = 0; 
     }
@@ -496,3 +510,4 @@ document.getElementById("sort_by_list").addEventListener("click", function() {
 
     sortByListAsc = !sortByListAsc;
 });
+
