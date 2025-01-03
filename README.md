@@ -16,7 +16,7 @@ To get started with the Task Manager app locally, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/task-manager.git
+   git clone https://github.com/grigoris24/task-manager.git
 
     Navigate into the project folder:
 
